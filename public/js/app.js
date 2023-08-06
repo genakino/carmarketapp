@@ -135,6 +135,9 @@ var VehicleCreate = function VehicleCreate() {
 var VehicleEdit = function VehicleEdit() {
   return __webpack_require__.e(/*! import() */ "resources_js_components_vehicle_edit_vue").then(__webpack_require__.bind(__webpack_require__, /*! ./components/vehicle/edit.vue */ "./resources/js/components/vehicle/edit.vue"));
 };
+var VehicleShow = function VehicleShow() {
+  return __webpack_require__.e(/*! import() */ "resources_js_components_vehicle_show_vue").then(__webpack_require__.bind(__webpack_require__, /*! ./components/vehicle/show.vue */ "./resources/js/components/vehicle/show.vue"));
+};
 var routes = [{
   name: 'home',
   path: '/',
@@ -151,6 +154,10 @@ var routes = [{
   name: 'vehicleAdd',
   path: '/vehicle/add',
   component: VehicleCreate
+}, {
+  name: 'vehicleShow',
+  path: '/vehicle/:id',
+  component: VehicleShow
 }];
 
 /***/ }),
@@ -42253,7 +42260,7 @@ const isThenable = (thing) =>
 /******/ 		// This function allow to reference async chunks
 /******/ 		__webpack_require__.u = (chunkId) => {
 /******/ 			// return url for filenames not based on template
-/******/ 			if ({"resources_js_components_Welcome_vue":1,"resources_js_components_vehicle_list_vue":1,"resources_js_components_vehicle_add_vue":1,"resources_js_components_vehicle_edit_vue":1}[chunkId]) return "js/" + chunkId + ".js";
+/******/ 			if ({"resources_js_components_Welcome_vue":1,"resources_js_components_vehicle_list_vue":1,"resources_js_components_vehicle_add_vue":1,"resources_js_components_vehicle_edit_vue":1,"resources_js_components_vehicle_show_vue":1}[chunkId]) return "js/" + chunkId + ".js";
 /******/ 			// return url for filenames based on template
 /******/ 			return undefined;
 /******/ 		};

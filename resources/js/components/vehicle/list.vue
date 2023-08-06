@@ -23,6 +23,7 @@
                                     <td>{{ vehicle.id }}</td>
                                     <td>{{ vehicle.name }}</td>
                                     <td>
+                                        <router-link :to='{ name:"vehicleShow" , params:{ id:vehicle.id } }' class="btn btn-success">Show</router-link>
                                         <router-link :to='{ name:"vehicleEdit" , params:{ id:vehicle.id } }' class="btn btn-success">Edit</router-link>
                                         <button type="button" @click="deleteVehicle(vehicle.id)" class="btn btn-danger">Delete</button>
                                     </td>

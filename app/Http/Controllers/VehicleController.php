@@ -3,10 +3,19 @@
 namespace App\Http\Controllers;
 
 use App\Models\Vehicle;
+use App\Repository\VehicleRepositoryInterface;
 use Illuminate\Http\Request;
 
 class VehicleController extends Controller
 {
+
+    public $vehicle;
+
+    public function __construct(VehicleRepositoryInterface $vehicle)
+    {
+        $this->vehicle = $vehicle;
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -14,7 +23,8 @@ class VehicleController extends Controller
      */
     public function index()
     {
-        $vehicles = Vehicle::all(['id','name']);
+        // $vehicles = Vehicle::all(['id','name']);
+        $vehicles = $this->vehicle->getAllVehicles();
         return response()->json($vehicles);
     }
 
@@ -36,11 +46,42 @@ class VehicleController extends Controller
      */
     public function store(Request $request)
     {
-        $vehicle = Vehicle::create($request->post());
+        // $vehicle = Vehicle::create($request->post());
+        // return response()->json([
+        //     'message' => 'Vehicle added successfully!!!',
+        //     'vehicle' => $vehicle
+        // ]);
+        $request->validate([
+            'name' => 'required',
+            'make' => 'required',
+            'model' => 'required',
+            'year' => 'required',
+            'mileage' => 'required',
+            'gearbox' => 'required',
+            'fuel_type' => 'required',
+            'color' => 'required',
+            'image' => 'required'
+        ]);
+
+        $data = $request->all();
+
+        //image upload
+        if($image = $request->file('image')) {
+            $name = time() . '.' . $image->getClientOriginalName();
+            $image->move(public_path('images'), $name);
+            $data['picture'] = "$name";
+        }
+
+        $this->vehicle->createVehicle($data);
+
         return response()->json([
             'message' => 'Vehicle added successfully!!!',
-            'vehicle' => $vehicle
+            'vehicle' => $this->vehicle
         ]);
+
+
+
+
     }
 
     /**
@@ -49,8 +90,10 @@ class VehicleController extends Controller
      * @param  \App\Models\Vehicle  $vehicle
      * @return \Illuminate\Http\Response
      */
-    public function show(Vehicle $vehicle)
+    public function show($id)
     {
+        $vehicle = $this->vehicle->getVehicleById($id);
+
         return response()->json($vehicle);
     }
 
