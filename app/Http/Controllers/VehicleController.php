@@ -56,11 +56,10 @@ class VehicleController extends Controller
             'make' => 'required',
             'model' => 'required',
             'year' => 'required',
-            'mileage' => 'required',
             'gearbox' => 'required',
             'fuel_type' => 'required',
-            'color' => 'required',
-            'image' => 'required'
+            'image' => 'string',
+            'price' => 'required'
         ]);
 
         $data = $request->all();
@@ -69,7 +68,7 @@ class VehicleController extends Controller
         if($image = $request->file('image')) {
             $name = time() . '.' . $image->getClientOriginalName();
             $image->move(public_path('images'), $name);
-            $data['picture'] = "$name";
+            $data['image'] = "$name";
         }
 
         $this->vehicle->createVehicle($data);
@@ -78,9 +77,6 @@ class VehicleController extends Controller
             'message' => 'Vehicle added successfully!!!',
             'vehicle' => $this->vehicle
         ]);
-
-
-
 
     }
 

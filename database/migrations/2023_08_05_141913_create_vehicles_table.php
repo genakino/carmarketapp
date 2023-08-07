@@ -19,11 +19,10 @@ return new class extends Migration
             $table->string('make');
             $table->string('model');
             $table->year('year');
-            $table->integer('mileage');
             $table->string('gearbox');
             $table->string('fuel_type');
-            $table->string('color');
             $table->string('image');
+            $table->float('price');
             $table->boolean('delete_flg')->default(0);
             $table->timestamps();
         });

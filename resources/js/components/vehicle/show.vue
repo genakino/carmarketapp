@@ -1,69 +1,72 @@
 <template>
-    <div class="row">
-        <div class="col-12">
-            <div class="card">
-                <div class="card-header">
-                    <h4>Update Vehicle</h4>
-                </div>
-                <div class="card-body">
-                    
-                        <div class="row">
-                            <div class="col-12 mb-2">
-                                <div class="form-group">
-                                    <label>Name</label>
-                                    <input type="text" class="form-control" v-model="vehicle.name">
-                                </div>
-                            </div>
-                            <div class="col-12 mb-2">
-                                <div class="form-group">
-                                    <label>Car Make</label>
-                                    <input type="text" class="form-control" v-model="vehicle.make">
-                                </div>
-                            </div>
-                            <div class="col-12 mb-2">
-                                <div class="form-group">
-                                    <label>Model</label>
-                                    <input type="text" class="form-control" v-model="vehicle.model">
-                                </div>
-                            </div>
-                            <div class="col-12 mb-2">
-                                <div class="form-group">
-                                    <label>Year</label>
-                                    <input type="text" class="form-control" v-model="vehicle.year">
-                                </div>
-                            </div>
-                            <div class="col-12 mb-2">
-                                <div class="form-group">
-                                    <label>Mileage</label>
-                                    <input type="text" class="form-control" v-model="vehicle.mileage">
-                                </div>
-                            </div>
-                            <div class="col-12 mb-2">
-                                <div class="form-group">
-                                    <label>Gearbox</label>
-                                    <input type="text" class="form-control" v-model="vehicle.gearbox">
-                                </div>
-                            </div>
-                            <div class="col-12 mb-2">
-                                <div class="form-group">
-                                    <label>Color</label>
-                                    <input type="text" class="form-control" v-model="vehicle.color">
-                                </div>
-                            </div>
-                            <div class="col-12 mb-2">
-                                <div class="form-group">
-                                    <label>Image</label>
-                                    <input type="text" class="form-control" v-model="vehicle.image">
-                                </div>
-                            </div>
-                            <div class="col-12 mb-2">
-                                <button type="button" class="btn btn-primary">Back</button>
-                            </div>
-                        </div>
-                    
+        <div class="container mt-5 mb-5">
+        <h2>Vehicle Details</h2>
+        <hr>
+        <form @submit.prevent="update">
+            <div class="form-group row mb-3">
+                <label for="image" class="col-sm-2 col-form-label">Image</label>
+                <div class="col-sm-8">
+                    <!-- <input type="file" class="form-control" @change="onChange"> -->
+                    <input type="text" class="form-control" v-model="vehicle.image">
                 </div>
             </div>
-        </div>
+
+            <div class="form-group row mb-3">
+                <label for="name" class="col-sm-2 col-form-label">Name</label>
+                <div class="col-sm-8">
+                    <input type="text" class="form-control" v-model="vehicle.name" readonly>
+                </div>
+            </div>
+
+            <div class="form-group row mb-3">
+                <label for="make" class="col-sm-2 col-form-label">Make</label>
+                <div class="col-sm-8">
+                    <input type="text" class="form-control" v-model="vehicle.make" readonly>
+                </div>
+            </div>
+
+            <div class="form-group row mb-3">
+                <label for="model" class="col-sm-2 col-form-label">Model</label>
+                <div class="col-sm-8">
+                    <input type="text" class="form-control" v-model="vehicle.model" readonly>
+                </div>
+            </div>
+
+            <div class="form-group row mb-3">
+                <label for="year" class="col-sm-2 col-form-label">Year</label>
+                <div class="col-sm-8">
+                    <input type="text" class="form-control" v-model="vehicle.year" readonly>
+                </div>
+            </div>
+
+            <div class="form-group row mb-3">
+                <label for="gearbox" class="col-sm-2 col-form-label">Gearbox</label>
+                <div class="col-sm-8">
+                    <input type="text" class="form-control" v-model="vehicle.gearbox" readonly>
+                </div>
+            </div>
+
+            <div class="form-group row mb-3">
+                <label for="fuel_type" class="col-sm-2 col-form-label">Fuel Type</label>
+                <div class="col-sm-8">
+                    <input type="text" class="form-control" v-model="vehicle.fuel_type" readonly>
+                </div>
+            </div>
+
+            <div class="form-group row mb-3">
+                <label for="price" class="col-sm-2 col-form-label">Price</label>
+                <div class="col-sm-8">
+                    <input type="text" class="form-control" v-model="vehicle.price" readonly>
+                </div>
+            </div>
+
+            <div class="form-group row  mb-3">
+                <div class="col-sm-8">
+                    <button type="button" class="btn btn-secondary" @click="goBack">Back</button>
+                    <button type="submit" class="btn btn-primary" @click="goUpdate">Update Vehicle</button>
+                </div>
+            </div>
+        </form>
     </div>
 </template>
 <script>
@@ -76,11 +79,10 @@ export default{
                 make:"",
                 model:"",
                 year:"",
-                mileage:"",
                 gearbox:"",
                 fuel_type:"",
-                color:"",
-                image:""
+                image:"",
+                price:""
             }
         }
     },
@@ -88,6 +90,12 @@ export default{
         this.showVehicle()
     },
     methods:{
+        goBack() {
+            this.$router.go(-1)
+        },
+        goUpdate() {
+            this.$router.push({name:"vehicleEdit"})
+        },
         async showVehicle(){
             await this.axios.get('/api/vehicle/'+this.$route.params.id).then(response=>{
                 const { 
@@ -95,22 +103,20 @@ export default{
                     make,
                     model,
                     year,
-                    mileage,
                     gearbox,
                     fuel_type,
-                    color,
-                    image 
+                    image,
+                    price
                 } = response.data
 
                 this.vehicle.name = name
                 this.vehicle.make = make
                 this.vehicle.model = model
                 this.vehicle.year = year
-                this.vehicle.mileage = mileage
                 this.vehicle.gearbox = gearbox
                 this.vehicle.fuel_type = fuel_type
-                this.vehicle.color = color
                 this.vehicle.image = image
+                this.vehicle.price = price
 
             }).catch(error=>{
                 console.log(error)

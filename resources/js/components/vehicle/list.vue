@@ -1,45 +1,27 @@
 <template>
-    <div class="row">
-        <div class="col-12 mb-2 text-end">
-            <router-link :to='{name:"vehicleAdd"}' class="btn btn-primary">Create</router-link>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-2">
+                <router-link :to='{ name:"vehicleAdd"}' class="btn btn-primary">Add Vehicle</router-link>
+            </div>
         </div>
-        <div class="col-12">
-            <div class="card">
-                <div class="card-header">
-                    <h4>Vehicle</h4>
-                </div>
-                <div class="card-body">
-                    <div class="table-responsive">
-                        <table class="table table-bordered">
-                            <thead>
-                                <tr>
-                                    <th>ID</th>
-                                    <th>Title</th>
-                                    <th>Actions</th>
-                                </tr>
-                            </thead>
-                            <tbody v-if="vehicles.length > 0">
-                                <tr v-for="(vehicle,key) in vehicles" :key="key">
-                                    <td>{{ vehicle.id }}</td>
-                                    <td>{{ vehicle.name }}</td>
-                                    <td>
-                                        <router-link :to='{ name:"vehicleShow" , params:{ id:vehicle.id } }' class="btn btn-success">Show</router-link>
-                                        <router-link :to='{ name:"vehicleEdit" , params:{ id:vehicle.id } }' class="btn btn-success">Edit</router-link>
-                                        <button type="button" @click="deleteVehicle(vehicle.id)" class="btn btn-danger">Delete</button>
-                                    </td>
-                                </tr>
-                            </tbody>
-                            <tbody v-else>
-                                <tr>
-                                    <td colspan="4" align="center">No Vehicles Found.</td>
-                                </tr>
-                            </tbody>
-                        </table>
+        <div class="row" v-if="vehicles.length > 0">
+            <div class="col-md-3" style="display:flex" 
+                v-for="(vehicle,key) in vehicles" :key="key">
+                <div class="card m-2 p-2" style="width: 18rem;">
+                    <!-- <img src="images/{{ vehicle.image }}" class="card-img-top" alt="..."> -->
+                    <div class="card-body">
+                    <h5 class="card-title">{{ vehicle.name }}</h5>
+                    <h5 class="card-title">Make: ${{ vehicle.make }}</h5>
+                    <hr>
+                    <!-- <p class="card-text">{{ $product->description}} </p> -->
+                    <router-link :to='{ name:"vehicleShow" , params:{ id:vehicle.id } }' class="btn btn-light">Show More</router-link>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+
 </template>
 <script>
 export default {

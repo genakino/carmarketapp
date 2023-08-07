@@ -18,11 +18,10 @@ class VehicleRepository implements VehicleRepositoryInterface {
             'make' => $data['make'],
             'model' => $data['model'],
             'year' => $data['year'],
-            'mileage' => $data['mileage'],
             'gearbox' => $data['gearbox'],
             'fuel_type' => $data['fuel_type'],
-            'color' => $data['color'],
-            'image' => $data['image']
+            'image' => $data['image'],
+            'price' => $data['price']
         ]);
     }
 

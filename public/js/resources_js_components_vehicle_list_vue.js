@@ -40,24 +40,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "vehicles",
@@ -189,134 +171,86 @@ var render = function () {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "row" }, [
-    _c(
-      "div",
-      { staticClass: "col-12 mb-2 text-end" },
-      [
-        _c(
-          "router-link",
-          {
-            staticClass: "btn btn-primary",
-            attrs: { to: { name: "vehicleAdd" } },
-          },
-          [_vm._v("Create")]
-        ),
-      ],
-      1
-    ),
+  return _c("div", { staticClass: "container" }, [
+    _c("div", { staticClass: "row" }, [
+      _c(
+        "div",
+        { staticClass: "col-md-2" },
+        [
+          _c(
+            "router-link",
+            {
+              staticClass: "btn btn-primary",
+              attrs: { to: { name: "vehicleAdd" } },
+            },
+            [_vm._v("Add Vehicle")]
+          ),
+        ],
+        1
+      ),
+    ]),
     _vm._v(" "),
-    _c("div", { staticClass: "col-12" }, [
-      _c("div", { staticClass: "card" }, [
-        _vm._m(0),
-        _vm._v(" "),
-        _c("div", { staticClass: "card-body" }, [
-          _c("div", { staticClass: "table-responsive" }, [
-            _c("table", { staticClass: "table table-bordered" }, [
-              _vm._m(1),
-              _vm._v(" "),
-              _vm.vehicles.length > 0
-                ? _c(
-                    "tbody",
-                    _vm._l(_vm.vehicles, function (vehicle, key) {
-                      return _c("tr", { key: key }, [
-                        _c("td", [_vm._v(_vm._s(vehicle.id))]),
+    _vm.vehicles.length > 0
+      ? _c(
+          "div",
+          { staticClass: "row" },
+          _vm._l(_vm.vehicles, function (vehicle, key) {
+            return _c(
+              "div",
+              {
+                key: key,
+                staticClass: "col-md-3",
+                staticStyle: { display: "flex" },
+              },
+              [
+                _c(
+                  "div",
+                  {
+                    staticClass: "card m-2 p-2",
+                    staticStyle: { width: "18rem" },
+                  },
+                  [
+                    _c(
+                      "div",
+                      { staticClass: "card-body" },
+                      [
+                        _c("h5", { staticClass: "card-title" }, [
+                          _vm._v(_vm._s(vehicle.name)),
+                        ]),
                         _vm._v(" "),
-                        _c("td", [_vm._v(_vm._s(vehicle.name))]),
+                        _c("h5", { staticClass: "card-title" }, [
+                          _vm._v("Make: $" + _vm._s(vehicle.make)),
+                        ]),
+                        _vm._v(" "),
+                        _c("hr"),
                         _vm._v(" "),
                         _c(
-                          "td",
-                          [
-                            _c(
-                              "router-link",
-                              {
-                                staticClass: "btn btn-success",
-                                attrs: {
-                                  to: {
-                                    name: "vehicleShow",
-                                    params: { id: vehicle.id },
-                                  },
-                                },
+                          "router-link",
+                          {
+                            staticClass: "btn btn-light",
+                            attrs: {
+                              to: {
+                                name: "vehicleShow",
+                                params: { id: vehicle.id },
                               },
-                              [_vm._v("Show")]
-                            ),
-                            _vm._v(" "),
-                            _c(
-                              "router-link",
-                              {
-                                staticClass: "btn btn-success",
-                                attrs: {
-                                  to: {
-                                    name: "vehicleEdit",
-                                    params: { id: vehicle.id },
-                                  },
-                                },
-                              },
-                              [_vm._v("Edit")]
-                            ),
-                            _vm._v(" "),
-                            _c(
-                              "button",
-                              {
-                                staticClass: "btn btn-danger",
-                                attrs: { type: "button" },
-                                on: {
-                                  click: function ($event) {
-                                    return _vm.deleteVehicle(vehicle.id)
-                                  },
-                                },
-                              },
-                              [_vm._v("Delete")]
-                            ),
-                          ],
-                          1
+                            },
+                          },
+                          [_vm._v("Show More")]
                         ),
-                      ])
-                    }),
-                    0
-                  )
-                : _c("tbody", [_vm._m(2)]),
-            ]),
-          ]),
-        ]),
-      ]),
-    ]),
+                      ],
+                      1
+                    ),
+                  ]
+                ),
+              ]
+            )
+          }),
+          0
+        )
+      : _vm._e(),
   ])
 }
-var staticRenderFns = [
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "card-header" }, [
-      _c("h4", [_vm._v("Vehicle")]),
-    ])
-  },
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("thead", [
-      _c("tr", [
-        _c("th", [_vm._v("ID")]),
-        _vm._v(" "),
-        _c("th", [_vm._v("Title")]),
-        _vm._v(" "),
-        _c("th", [_vm._v("Actions")]),
-      ]),
-    ])
-  },
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("tr", [
-      _c("td", { attrs: { colspan: "4", align: "center" } }, [
-        _vm._v("No Vehicles Found."),
-      ]),
-    ])
-  },
-]
+var staticRenderFns = []
 render._withStripped = true
 
 

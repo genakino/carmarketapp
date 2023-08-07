@@ -14,11 +14,10 @@ class Vehicle extends Model
         'make',
         'model',
         'year',
-        'mileage',
         'gearbox',
         'fuel_type',
-        'color',
         'image',
+        'price',
         'delete_flg'
     ];
 }
