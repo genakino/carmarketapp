@@ -1,10 +1,10 @@
 "use strict";
-(self["webpackChunkcarmarketapp"] = self["webpackChunkcarmarketapp"] || []).push([["resources_js_components_vehicle_add_vue"],{
+(self["webpackChunkcarmarketapp"] = self["webpackChunkcarmarketapp"] || []).push([["resources_js_components_vehicle_update_vue"],{
 
-/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/vehicle/add.vue?vue&type=script&lang=js&":
-/*!******************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/vehicle/add.vue?vue&type=script&lang=js& ***!
-  \******************************************************************************************************************************************************************************************************************/
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/vehicle/update.vue?vue&type=script&lang=js&":
+/*!*********************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/vehicle/update.vue?vue&type=script&lang=js& ***!
+  \*********************************************************************************************************************************************************************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 __webpack_require__.r(__webpack_exports__);
@@ -101,9 +101,12 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  name: "add-vehicle",
+  name: "update-vehicle",
   data: function data() {
     return {
       vehicle: {
@@ -114,7 +117,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         gearbox: "",
         fuel_type: "",
         image: "",
-        price: ""
+        price: "",
+        newImage: ""
       },
       startYear: 2000,
       endYear: new Date().getFullYear(),
@@ -143,43 +147,83 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       return years;
     }
   },
+  mounted: function mounted() {
+    this.showVehicle();
+  },
   methods: {
+    goBack: function goBack() {
+      this.$router.go(-1);
+    },
     onChange: function onChange(e) {
       var image = e.target.files[0];
-      this.vehicle.image = image;
+      this.vehicle.newImage = image;
     },
-    create: function create() {
+    showVehicle: function showVehicle() {
       var _this = this;
       return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
-        var data;
         return _regeneratorRuntime().wrap(function _callee$(_context) {
           while (1) switch (_context.prev = _context.next) {
             case 0:
-              data = new FormData();
-              data.append('name', _this.vehicle.name);
-              data.append('make', _this.vehicle.make);
-              data.append('model', _this.vehicle.model);
-              data.append('year', _this.vehicle.year);
-              data.append('gearbox', _this.vehicle.gearbox);
-              data.append('fuel_type', _this.vehicle.fuel_type);
-              data.append('image', _this.vehicle.image);
-              data.append('price', _this.vehicle.price);
-              _context.next = 11;
-              return _this.axios.post('/api/vehicle', data).then(function (response) {
-                console.log(response.data);
-                _this.message = response.data.message;
-                alert(_this.message);
-                _this.$router.push({
+              _context.next = 2;
+              return _this.axios.get('/api/vehicle/' + _this.$route.params.id).then(function (response) {
+                var _response$data = response.data,
+                  name = _response$data.name,
+                  make = _response$data.make,
+                  model = _response$data.model,
+                  year = _response$data.year,
+                  gearbox = _response$data.gearbox,
+                  fuel_type = _response$data.fuel_type,
+                  image = _response$data.image,
+                  price = _response$data.price;
+                _this.vehicle.name = name;
+                _this.vehicle.make = make;
+                _this.vehicle.model = model;
+                _this.vehicle.year = year;
+                _this.vehicle.gearbox = gearbox;
+                _this.vehicle.fuel_type = fuel_type;
+                _this.vehicle.image = image;
+                _this.vehicle.price = price;
+              })["catch"](function (error) {
+                console.log(error);
+              });
+            case 2:
+            case "end":
+              return _context.stop();
+          }
+        }, _callee);
+      }))();
+    },
+    update: function update() {
+      var _this2 = this;
+      return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee2() {
+        var updateData;
+        return _regeneratorRuntime().wrap(function _callee2$(_context2) {
+          while (1) switch (_context2.prev = _context2.next) {
+            case 0:
+              updateData = new FormData();
+              updateData.append('id', _this2.$route.params.id);
+              updateData.append('name', _this2.vehicle.name);
+              updateData.append('make', _this2.vehicle.make);
+              updateData.append('model', _this2.vehicle.model);
+              updateData.append('year', _this2.vehicle.year);
+              updateData.append('gearbox', _this2.vehicle.gearbox);
+              updateData.append('fuel_type', _this2.vehicle.fuel_type);
+              updateData.append('image', _this2.vehicle.newImage ? _this2.vehicle.newImage : _this2.vehicle.image);
+              updateData.append('price', _this2.vehicle.price);
+              updateData.append('_method', 'PATCH');
+              _context2.next = 13;
+              return _this2.axios.post('/api/vehicle/' + _this2.$route.params.id, updateData).then(function (response) {
+                _this2.$router.push({
                   name: "vehicleList"
                 });
               })["catch"](function (error) {
                 console.log(error);
               });
-            case 11:
+            case 13:
             case "end":
-              return _context.stop();
+              return _context2.stop();
           }
-        }, _callee);
+        }, _callee2);
       }))();
     }
   }
@@ -187,18 +231,18 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
 /***/ }),
 
-/***/ "./resources/js/components/vehicle/add.vue":
-/*!*************************************************!*\
-  !*** ./resources/js/components/vehicle/add.vue ***!
-  \*************************************************/
+/***/ "./resources/js/components/vehicle/update.vue":
+/*!****************************************************!*\
+  !*** ./resources/js/components/vehicle/update.vue ***!
+  \****************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _add_vue_vue_type_template_id_a9dd397a___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./add.vue?vue&type=template&id=a9dd397a& */ "./resources/js/components/vehicle/add.vue?vue&type=template&id=a9dd397a&");
-/* harmony import */ var _add_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./add.vue?vue&type=script&lang=js& */ "./resources/js/components/vehicle/add.vue?vue&type=script&lang=js&");
+/* harmony import */ var _update_vue_vue_type_template_id_2a48abd2___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./update.vue?vue&type=template&id=2a48abd2& */ "./resources/js/components/vehicle/update.vue?vue&type=template&id=2a48abd2&");
+/* harmony import */ var _update_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./update.vue?vue&type=script&lang=js& */ "./resources/js/components/vehicle/update.vue?vue&type=script&lang=js&");
 /* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! !../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
 
@@ -208,9 +252,9 @@ __webpack_require__.r(__webpack_exports__);
 /* normalize component */
 ;
 var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
-  _add_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
-  _add_vue_vue_type_template_id_a9dd397a___WEBPACK_IMPORTED_MODULE_0__.render,
-  _add_vue_vue_type_template_id_a9dd397a___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
+  _update_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _update_vue_vue_type_template_id_2a48abd2___WEBPACK_IMPORTED_MODULE_0__.render,
+  _update_vue_vue_type_template_id_2a48abd2___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
   false,
   null,
   null,
@@ -220,46 +264,46 @@ var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__
 
 /* hot reload */
 if (false) { var api; }
-component.options.__file = "resources/js/components/vehicle/add.vue"
+component.options.__file = "resources/js/components/vehicle/update.vue"
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (component.exports);
 
 /***/ }),
 
-/***/ "./resources/js/components/vehicle/add.vue?vue&type=script&lang=js&":
-/*!**************************************************************************!*\
-  !*** ./resources/js/components/vehicle/add.vue?vue&type=script&lang=js& ***!
-  \**************************************************************************/
+/***/ "./resources/js/components/vehicle/update.vue?vue&type=script&lang=js&":
+/*!*****************************************************************************!*\
+  !*** ./resources/js/components/vehicle/update.vue?vue&type=script&lang=js& ***!
+  \*****************************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_add_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./add.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/vehicle/add.vue?vue&type=script&lang=js&");
- /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_add_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_update_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./update.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/vehicle/update.vue?vue&type=script&lang=js&");
+ /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_update_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
 
 /***/ }),
 
-/***/ "./resources/js/components/vehicle/add.vue?vue&type=template&id=a9dd397a&":
-/*!********************************************************************************!*\
-  !*** ./resources/js/components/vehicle/add.vue?vue&type=template&id=a9dd397a& ***!
-  \********************************************************************************/
+/***/ "./resources/js/components/vehicle/update.vue?vue&type=template&id=2a48abd2&":
+/*!***********************************************************************************!*\
+  !*** ./resources/js/components/vehicle/update.vue?vue&type=template&id=2a48abd2& ***!
+  \***********************************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   render: () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_add_vue_vue_type_template_id_a9dd397a___WEBPACK_IMPORTED_MODULE_0__.render),
-/* harmony export */   staticRenderFns: () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_add_vue_vue_type_template_id_a9dd397a___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
+/* harmony export */   render: () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_update_vue_vue_type_template_id_2a48abd2___WEBPACK_IMPORTED_MODULE_0__.render),
+/* harmony export */   staticRenderFns: () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_update_vue_vue_type_template_id_2a48abd2___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
 /* harmony export */ });
-/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_add_vue_vue_type_template_id_a9dd397a___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./add.vue?vue&type=template&id=a9dd397a& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/vehicle/add.vue?vue&type=template&id=a9dd397a&");
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_update_vue_vue_type_template_id_2a48abd2___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./update.vue?vue&type=template&id=2a48abd2& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/vehicle/update.vue?vue&type=template&id=2a48abd2&");
 
 
 /***/ }),
 
-/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/vehicle/add.vue?vue&type=template&id=a9dd397a&":
-/*!***********************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/vehicle/add.vue?vue&type=template&id=a9dd397a& ***!
-  \***********************************************************************************************************************************************************************************************************************/
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/vehicle/update.vue?vue&type=template&id=2a48abd2&":
+/*!**************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/vehicle/update.vue?vue&type=template&id=2a48abd2& ***!
+  \**************************************************************************************************************************************************************************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 __webpack_require__.r(__webpack_exports__);
@@ -272,7 +316,7 @@ var render = function () {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "container mt-5 mb-5" }, [
-    _c("h2", [_vm._v("Add Vehicle")]),
+    _c("h2", [_vm._v("Update Vehicle")]),
     _vm._v(" "),
     _c("hr"),
     _vm._v(" "),
@@ -283,11 +327,28 @@ var render = function () {
         on: {
           submit: function ($event) {
             $event.preventDefault()
-            return _vm.create.apply(null, arguments)
+            return _vm.update.apply(null, arguments)
           },
         },
       },
       [
+        _c("div", { staticClass: "form-group row mb-3" }, [
+          _c("label", {
+            staticClass: "col-sm-2 col-form-label",
+            attrs: { for: "image" },
+          }),
+          _vm._v(" "),
+          _c("div", { staticClass: "col-sm-8" }, [
+            _c("img", {
+              attrs: {
+                src: "/images/" + _vm.vehicle.image,
+                height: "450px",
+                alt: "...",
+              },
+            }),
+          ]),
+        ]),
+        _vm._v(" "),
         _c("div", { staticClass: "form-group row mb-3" }, [
           _c(
             "label",
@@ -322,7 +383,7 @@ var render = function () {
                 },
               ],
               staticClass: "form-control",
-              attrs: { type: "text", placeholder: "Enter Name" },
+              attrs: { type: "text" },
               domProps: { value: _vm.vehicle.name },
               on: {
                 input: function ($event) {
@@ -354,7 +415,7 @@ var render = function () {
                 },
               ],
               staticClass: "form-control",
-              attrs: { type: "text", placeholder: "Enter Car Make" },
+              attrs: { type: "text" },
               domProps: { value: _vm.vehicle.make },
               on: {
                 input: function ($event) {
@@ -386,7 +447,7 @@ var render = function () {
                 },
               ],
               staticClass: "form-control",
-              attrs: { type: "text", placeholder: "Enter Model" },
+              attrs: { type: "text" },
               domProps: { value: _vm.vehicle.model },
               on: {
                 input: function ($event) {
@@ -505,26 +566,20 @@ var render = function () {
                   },
                 },
               },
-              [
-                _c("option", { attrs: { value: "", disabled: "" } }, [
-                  _vm._v("Choose Gearbox"),
-                ]),
-                _vm._v(" "),
-                _vm._l(_vm.gearbox_options, function (gearbox) {
-                  return _c(
-                    "option",
-                    { key: gearbox.value, domProps: { value: gearbox.value } },
-                    [
-                      _vm._v(
-                        "\n                        " +
-                          _vm._s(gearbox.text) +
-                          "\n                    "
-                      ),
-                    ]
-                  )
-                }),
-              ],
-              2
+              _vm._l(_vm.gearbox_options, function (gearbox) {
+                return _c(
+                  "option",
+                  { key: gearbox.value, domProps: { value: gearbox.value } },
+                  [
+                    _vm._v(
+                      "\n                        " +
+                        _vm._s(gearbox.text) +
+                        "\n                    "
+                    ),
+                  ]
+                )
+              }),
+              0
             ),
           ]),
         ]),
@@ -571,29 +626,23 @@ var render = function () {
                   },
                 },
               },
-              [
-                _c("option", { attrs: { value: "", disabled: "" } }, [
-                  _vm._v("Choose Fuel Type"),
-                ]),
-                _vm._v(" "),
-                _vm._l(_vm.fuel_type_options, function (fuel_type) {
-                  return _c(
-                    "option",
-                    {
-                      key: fuel_type.value,
-                      domProps: { value: fuel_type.value },
-                    },
-                    [
-                      _vm._v(
-                        "\n                        " +
-                          _vm._s(fuel_type.text) +
-                          "\n                    "
-                      ),
-                    ]
-                  )
-                }),
-              ],
-              2
+              _vm._l(_vm.fuel_type_options, function (fuel_type) {
+                return _c(
+                  "option",
+                  {
+                    key: fuel_type.value,
+                    domProps: { value: fuel_type.value },
+                  },
+                  [
+                    _vm._v(
+                      "\n                        " +
+                        _vm._s(fuel_type.text) +
+                        "\n                    "
+                    ),
+                  ]
+                )
+              }),
+              0
             ),
           ]),
         ]),
@@ -616,7 +665,7 @@ var render = function () {
                 },
               ],
               staticClass: "form-control",
-              attrs: { type: "text", placeholder: "Enter Price" },
+              attrs: { type: "text" },
               domProps: { value: _vm.vehicle.price },
               on: {
                 input: function ($event) {
@@ -630,27 +679,30 @@ var render = function () {
           ]),
         ]),
         _vm._v(" "),
-        _vm._m(0),
+        _c("div", { staticClass: "form-group row mb-3" }, [
+          _c("div", { staticClass: "col-sm-8" }, [
+            _c(
+              "button",
+              {
+                staticClass: "btn btn-secondary",
+                attrs: { type: "button" },
+                on: { click: _vm.goBack },
+              },
+              [_vm._v("Cancel")]
+            ),
+            _vm._v(" "),
+            _c(
+              "button",
+              { staticClass: "btn btn-primary", attrs: { type: "submit" } },
+              [_vm._v("Update Vehicle")]
+            ),
+          ]),
+        ]),
       ]
     ),
   ])
 }
-var staticRenderFns = [
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "form-group row mb-3" }, [
-      _c("div", { staticClass: "col-sm-8" }, [
-        _c(
-          "button",
-          { staticClass: "btn btn-primary", attrs: { type: "submit" } },
-          [_vm._v("Add Vehicle")]
-        ),
-      ]),
-    ])
-  },
-]
+var staticRenderFns = []
 render._withStripped = true
 
 

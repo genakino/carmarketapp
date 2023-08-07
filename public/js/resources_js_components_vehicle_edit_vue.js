@@ -99,6 +99,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "update-vehicle",
@@ -113,23 +118,23 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         fuel_type: "",
         image: "",
         price: "",
-        _method: "patch"
+        newImage: ""
       },
       startYear: 2000,
       endYear: new Date().getFullYear(),
       gearbox_options: [{
         text: 'Automatic',
-        value: 'automatic'
+        value: 'Automatic'
       }, {
         text: 'Manual',
-        value: 'manual'
+        value: 'Manual'
       }],
       fuel_type_options: [{
         text: 'Petrol',
-        value: 'petrol'
+        value: 'Petrol'
       }, {
         text: 'Diesel',
-        value: 'diesel'
+        value: 'Diesel'
       }]
     };
   },
@@ -148,6 +153,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   methods: {
     goBack: function goBack() {
       this.$router.go(-1);
+    },
+    onChange: function onChange(e) {
+      var image = e.target.files[0];
+      this.vehicle.newImage = image;
     },
     showVehicle: function showVehicle() {
       var _this = this;
@@ -187,18 +196,31 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     update: function update() {
       var _this2 = this;
       return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee2() {
+        var updateData;
         return _regeneratorRuntime().wrap(function _callee2$(_context2) {
           while (1) switch (_context2.prev = _context2.next) {
             case 0:
-              _context2.next = 2;
-              return _this2.axios.post('/api/vehicle/' + _this2.$route.params.id, _this2.vehicle).then(function (response) {
+              updateData = new FormData();
+              updateData.append('id', _this2.$route.params.id);
+              updateData.append('name', _this2.vehicle.name);
+              updateData.append('make', _this2.vehicle.make);
+              updateData.append('model', _this2.vehicle.model);
+              updateData.append('year', _this2.vehicle.year);
+              updateData.append('gearbox', _this2.vehicle.gearbox);
+              updateData.append('fuel_type', _this2.vehicle.fuel_type);
+              updateData.append('image', _this2.vehicle.newImage ? _this2.vehicle.newImage : _this2.vehicle.image);
+              updateData.append('price', _this2.vehicle.price);
+              updateData.append('_method', 'PATCH');
+              console.log(JSON.stringify(updateData));
+              _context2.next = 14;
+              return _this2.axios.post('/api/vehicle/' + _this2.$route.params.id, updateData).then(function (response) {
                 _this2.$router.push({
                   name: "vehicleList"
                 });
               })["catch"](function (error) {
                 console.log(error);
               });
-            case 2:
+            case 14:
             case "end":
               return _context2.stop();
           }
@@ -302,6 +324,7 @@ var render = function () {
     _c(
       "form",
       {
+        attrs: { enctype: "multipart/form-data" },
         on: {
           submit: function ($event) {
             $event.preventDefault()
@@ -311,6 +334,23 @@ var render = function () {
       },
       [
         _c("div", { staticClass: "form-group row mb-3" }, [
+          _c("label", {
+            staticClass: "col-sm-2 col-form-label",
+            attrs: { for: "image" },
+          }),
+          _vm._v(" "),
+          _c("div", { staticClass: "col-sm-8" }, [
+            _c("img", {
+              attrs: {
+                src: "/images/" + _vm.vehicle.image,
+                height: "450px",
+                alt: "...",
+              },
+            }),
+          ]),
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "form-group row mb-3" }, [
           _c(
             "label",
             { staticClass: "col-sm-2 col-form-label", attrs: { for: "image" } },
@@ -319,25 +359,9 @@ var render = function () {
           _vm._v(" "),
           _c("div", { staticClass: "col-sm-8" }, [
             _c("input", {
-              directives: [
-                {
-                  name: "model",
-                  rawName: "v-model",
-                  value: _vm.vehicle.image,
-                  expression: "vehicle.image",
-                },
-              ],
               staticClass: "form-control",
-              attrs: { type: "text" },
-              domProps: { value: _vm.vehicle.image },
-              on: {
-                input: function ($event) {
-                  if ($event.target.composing) {
-                    return
-                  }
-                  _vm.$set(_vm.vehicle, "image", $event.target.value)
-                },
-              },
+              attrs: { type: "file", name: "image" },
+              on: { change: _vm.onChange },
             }),
           ]),
         ]),
@@ -483,13 +507,17 @@ var render = function () {
                 ]),
                 _vm._v(" "),
                 _vm._l(_vm.yearList, function (year) {
-                  return _c("option", { domProps: { value: year } }, [
-                    _vm._v(
-                      "\n                        " +
-                        _vm._s(year) +
-                        "\n                    "
-                    ),
-                  ])
+                  return _c(
+                    "option",
+                    { key: year, domProps: { value: year } },
+                    [
+                      _vm._v(
+                        "\n                        " +
+                          _vm._s(year) +
+                          "\n                    "
+                      ),
+                    ]
+                  )
                 }),
               ],
               2
@@ -540,13 +568,17 @@ var render = function () {
                 },
               },
               _vm._l(_vm.gearbox_options, function (gearbox) {
-                return _c("option", { domProps: { value: gearbox.value } }, [
-                  _vm._v(
-                    "\n                        " +
-                      _vm._s(gearbox.text) +
-                      "\n                    "
-                  ),
-                ])
+                return _c(
+                  "option",
+                  { key: gearbox.value, domProps: { value: gearbox.value } },
+                  [
+                    _vm._v(
+                      "\n                        " +
+                        _vm._s(gearbox.text) +
+                        "\n                    "
+                    ),
+                  ]
+                )
               }),
               0
             ),
@@ -596,13 +628,20 @@ var render = function () {
                 },
               },
               _vm._l(_vm.fuel_type_options, function (fuel_type) {
-                return _c("option", { domProps: { value: fuel_type.value } }, [
-                  _vm._v(
-                    "\n                        " +
-                      _vm._s(fuel_type.text) +
-                      "\n                    "
-                  ),
-                ])
+                return _c(
+                  "option",
+                  {
+                    key: fuel_type.value,
+                    domProps: { value: fuel_type.value },
+                  },
+                  [
+                    _vm._v(
+                      "\n                        " +
+                        _vm._s(fuel_type.text) +
+                        "\n                    "
+                    ),
+                  ]
+                )
               }),
               0
             ),

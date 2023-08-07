@@ -10,6 +10,8 @@ interface VehicleRepositoryInterface {
 
     public function getVehicleById($id);
 
+    public function updateVehicle($id, array $data);
+
 }
 
 ?>

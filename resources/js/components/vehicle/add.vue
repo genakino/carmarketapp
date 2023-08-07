@@ -2,13 +2,11 @@
     <div class="container mt-5 mb-5">
         <h2>Add Vehicle</h2>
         <hr>
-
-        <form @submit="create" enctype="multipart/form-data">
+        <form @submit.prevent="create" enctype="multipart/form-data">
             <div class="form-group row mb-3">
                 <label for="image" class="col-sm-2 col-form-label">Image</label>
                 <div class="col-sm-8">
-                    <!-- <input type="file" class="form-control" @change="onChange"> -->
-                    <input type="text" class="form-control" v-model="vehicle.image" placeholder="Enter Image">
+                    <input type="file" name ="image" class="form-control" @change="onChange">
                 </div>
             </div>
 
@@ -36,9 +34,9 @@
             <div class="form-group row mb-3">
                 <label for="year" class="col-sm-2 col-form-label">Year</label>
                 <div class="col-sm-8">
-                    <select name="year" class="form-control"v-model="vehicle.year">
+                    <select name="year" class="form-control" v-model="vehicle.year">
                         <option value="" disabled>Choose Year</option>
-                        <option v-for="year in yearList" :value="year">
+                        <option v-for="year in yearList" v-bind:key="year" :value="year">
                             {{ year }}
                         </option>
                     </select>
@@ -48,9 +46,9 @@
             <div class="form-group row mb-3">
                 <label for="gearbox" class="col-sm-2 col-form-label">Gearbox</label>
                 <div class="col-sm-8">
-                    <select name="gearbox" class="form-control"v-model="vehicle.gearbox">
+                    <select name="gearbox" class="form-control" v-model="vehicle.gearbox">
                         <option value="" disabled>Choose Gearbox</option>
-                        <option v-for="gearbox in gearbox_options" :value="gearbox.value">
+                        <option v-for="gearbox in gearbox_options" v-bind:key="gearbox.value" :value="gearbox.value">
                             {{ gearbox.text }}
                         </option>
                     </select>
@@ -62,7 +60,7 @@
                 <div class="col-sm-8">
                     <select name="fuel_type" class="form-control" v-model="vehicle.fuel_type">
                         <option value="" disabled>Choose Fuel Type</option>
-                        <option v-for="fuel_type in fuel_type_options" :value="fuel_type.value">
+                        <option v-for="fuel_type in fuel_type_options" v-bind:key="fuel_type.value" :value="fuel_type.value">
                             {{ fuel_type.text }}
                         </option>
                     </select>
@@ -104,12 +102,12 @@ export default{
             startYear: 2000,
             endYear: new Date().getFullYear(),
             gearbox_options: [
-                {text: 'Automatic', value:'automatic'},
-                {text: 'Manual', value:'manual'}
+                {text: 'Automatic', value:'Automatic'},
+                {text: 'Manual', value:'Manual'}
             ],
             fuel_type_options: [
-                {text: 'Petrol', value:'petrol'},
-                {text: 'Diesel', value:'diesel'}
+                {text: 'Petrol', value:'Petrol'},
+                {text: 'Diesel', value:'Diesel'}
             ]
         }
     },
@@ -126,24 +124,23 @@ export default{
         onChange(e) {
             let image = e.target.files[0];
             this.vehicle.image = image;
-            console.log('image xx = ' + JSON.stringify(this.vehicle.image));
         },
-        async create(e){
-            e.preventDefault();
+        async create(){
+            const data = new FormData();
+            data.append('name', this.vehicle.name);
+            data.append('make', this.vehicle.make);
+            data.append('model', this.vehicle.model);
+            data.append('year', this.vehicle.year);
+            data.append('gearbox', this.vehicle.gearbox);
+            data.append('fuel_type', this.vehicle.fuel_type);
+            data.append('image', this.vehicle.image);
+            data.append('price', this.vehicle.price);
 
-            let existingObj = this;
-            const config = {
-                headers: {
-                    'content-type': 'multipart/form-data'
-                }
-            }
-
-            let data = new FormData();
-            data.append('this.vehicle.image', this.vehicle.image);
-
-             console.log(JSON.stringify(data));
-
-            await this.axios.post('/api/vehicle', this.vehicle).then(response=>{
+            await this.axios.post('/api/vehicle', data)
+            .then(response=>{
+                console.log(response.data);
+                this.message = response.data.message
+                alert(this.message)
                 this.$router.push({name:"vehicleList"})
             }).catch(error=>{
                 console.log(error)

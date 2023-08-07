@@ -31,6 +31,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({});
 
@@ -132,8 +133,8 @@ var VehicleList = function VehicleList() {
 var VehicleCreate = function VehicleCreate() {
   return __webpack_require__.e(/*! import() */ "resources_js_components_vehicle_add_vue").then(__webpack_require__.bind(__webpack_require__, /*! ./components/vehicle/add.vue */ "./resources/js/components/vehicle/add.vue"));
 };
-var VehicleEdit = function VehicleEdit() {
-  return __webpack_require__.e(/*! import() */ "resources_js_components_vehicle_edit_vue").then(__webpack_require__.bind(__webpack_require__, /*! ./components/vehicle/edit.vue */ "./resources/js/components/vehicle/edit.vue"));
+var VehicleUpdate = function VehicleUpdate() {
+  return __webpack_require__.e(/*! import() */ "resources_js_components_vehicle_update_vue").then(__webpack_require__.bind(__webpack_require__, /*! ./components/vehicle/update.vue */ "./resources/js/components/vehicle/update.vue"));
 };
 var VehicleShow = function VehicleShow() {
   return __webpack_require__.e(/*! import() */ "resources_js_components_vehicle_show_vue").then(__webpack_require__.bind(__webpack_require__, /*! ./components/vehicle/show.vue */ "./resources/js/components/vehicle/show.vue"));
@@ -144,12 +145,12 @@ var routes = [{
   component: Welcome
 }, {
   name: 'vehicleList',
-  path: '/vehicle',
+  path: '/vehicles',
   component: VehicleList
 }, {
-  name: 'vehicleEdit',
-  path: '/vehicle/:id/edit',
-  component: VehicleEdit
+  name: 'vehicleUpdate',
+  path: '/vehicle/:id/update',
+  component: VehicleUpdate
 }, {
   name: 'vehicleAdd',
   path: '/vehicle/add',
@@ -19564,45 +19565,36 @@ var render = function () {
   var _c = _vm._self._c || _h
   return _c("main", [
     _c("nav", { staticClass: "navbar navbar-expand-lg navbar-dark bg-dark" }, [
-      _c(
-        "div",
-        { staticClass: "container-fluid" },
-        [
-          _c(
-            "router-link",
-            { staticClass: "navbar-brand", attrs: { to: "/", href: "#" } },
-            [_vm._v("CarMarketApp")]
-          ),
-          _vm._v(" "),
-          _c(
-            "div",
-            {
-              staticClass: "collapse navbar-collapse",
-              attrs: { id: "navbarSupportedContent" },
-            },
-            [
-              _c("ul", { staticClass: "navbar-nav mr-auto" }, [
-                _c(
-                  "li",
-                  {
-                    staticClass: "nav-item",
-                    attrs: { "exact-active-class": "active" },
-                  },
-                  [
-                    _c(
-                      "router-link",
-                      { staticClass: "nav-link", attrs: { to: "/vehicle" } },
-                      [_vm._v("Vehicles")]
-                    ),
-                  ],
-                  1
-                ),
-              ]),
-            ]
-          ),
-        ],
-        1
-      ),
+      _c("div", { staticClass: "container-fluid" }, [
+        _c("h2", { staticClass: "navbar-brand" }, [_vm._v("CarMarketApp")]),
+        _vm._v(" "),
+        _c(
+          "div",
+          {
+            staticClass: "collapse navbar-collapse",
+            attrs: { id: "navbarSupportedContent" },
+          },
+          [
+            _c("ul", { staticClass: "navbar-nav mr-auto" }, [
+              _c(
+                "li",
+                {
+                  staticClass: "nav-item",
+                  attrs: { "exact-active-class": "active" },
+                },
+                [
+                  _c(
+                    "router-link",
+                    { staticClass: "nav-link", attrs: { to: "/vehicles" } },
+                    [_vm._v("Vehicles")]
+                  ),
+                ],
+                1
+              ),
+            ]),
+          ]
+        ),
+      ]),
     ]),
     _vm._v(" "),
     _c("div", { staticClass: "container mt-5" }, [_c("router-view")], 1),
@@ -42260,7 +42252,7 @@ const isThenable = (thing) =>
 /******/ 		// This function allow to reference async chunks
 /******/ 		__webpack_require__.u = (chunkId) => {
 /******/ 			// return url for filenames not based on template
-/******/ 			if ({"resources_js_components_Welcome_vue":1,"resources_js_components_vehicle_list_vue":1,"resources_js_components_vehicle_add_vue":1,"resources_js_components_vehicle_edit_vue":1,"resources_js_components_vehicle_show_vue":1}[chunkId]) return "js/" + chunkId + ".js";
+/******/ 			if ({"resources_js_components_Welcome_vue":1,"resources_js_components_vehicle_list_vue":1,"resources_js_components_vehicle_add_vue":1,"resources_js_components_vehicle_update_vue":1,"resources_js_components_vehicle_show_vue":1}[chunkId]) return "js/" + chunkId + ".js";
 /******/ 			// return url for filenames based on template
 /******/ 			return undefined;
 /******/ 		};

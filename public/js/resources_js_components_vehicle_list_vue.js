@@ -40,6 +40,13 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "vehicles",
@@ -71,16 +78,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           }
         }, _callee);
       }))();
-    },
-    deleteVehicle: function deleteVehicle(id) {
-      var _this2 = this;
-      if (confirm("Are you sure to delete this vehicle ?")) {
-        this.axios["delete"]('/api/vehicle/' + id).then(function (response) {
-          _this2.getVehicles();
-        })["catch"](function (error) {
-          console.log(error);
-        });
-      }
     }
   }
 });
@@ -172,7 +169,7 @@ var render = function () {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "container" }, [
-    _c("div", { staticClass: "row" }, [
+    _c("div", { staticClass: "row mb-3" }, [
       _c(
         "div",
         { staticClass: "col-md-2" },
@@ -210,6 +207,11 @@ var render = function () {
                     staticStyle: { width: "18rem" },
                   },
                   [
+                    _c("img", {
+                      staticClass: "card-img-top",
+                      attrs: { src: "images/" + vehicle.image, alt: "..." },
+                    }),
+                    _vm._v(" "),
                     _c(
                       "div",
                       { staticClass: "card-body" },
@@ -219,10 +221,30 @@ var render = function () {
                         ]),
                         _vm._v(" "),
                         _c("h5", { staticClass: "card-title" }, [
-                          _vm._v("Make: $" + _vm._s(vehicle.make)),
+                          _vm._v(_vm._s(vehicle.make)),
                         ]),
                         _vm._v(" "),
                         _c("hr"),
+                        _vm._v(" "),
+                        _c("p", { staticClass: "card-text" }, [
+                          _vm._v(
+                            "\n                    Price: £ " +
+                              _vm._s(vehicle.price) +
+                              " "
+                          ),
+                          _c("br"),
+                          _vm._v(
+                            "\n                    Model: " +
+                              _vm._s(vehicle.model) +
+                              " "
+                          ),
+                          _c("br"),
+                          _vm._v(
+                            "\n                    Year: " +
+                              _vm._s(vehicle.model) +
+                              "\n                "
+                          ),
+                        ]),
                         _vm._v(" "),
                         _c(
                           "router-link",
@@ -247,7 +269,9 @@ var render = function () {
           }),
           0
         )
-      : _vm._e(),
+      : _c("div", { staticClass: "row" }, [
+          _c("p", [_vm._v("No vehicles available.")]),
+        ]),
   ])
 }
 var staticRenderFns = []

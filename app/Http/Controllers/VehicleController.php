@@ -23,19 +23,8 @@ class VehicleController extends Controller
      */
     public function index()
     {
-        // $vehicles = Vehicle::all(['id','name']);
         $vehicles = $this->vehicle->getAllVehicles();
         return response()->json($vehicles);
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
     }
 
     /**
@@ -46,11 +35,6 @@ class VehicleController extends Controller
      */
     public function store(Request $request)
     {
-        // $vehicle = Vehicle::create($request->post());
-        // return response()->json([
-        //     'message' => 'Vehicle added successfully!!!',
-        //     'vehicle' => $vehicle
-        // ]);
         $request->validate([
             'name' => 'required',
             'make' => 'required',
@@ -58,17 +42,18 @@ class VehicleController extends Controller
             'year' => 'required',
             'gearbox' => 'required',
             'fuel_type' => 'required',
-            'image' => 'string',
-            'price' => 'required'
+            'price' => 'required',
+            'image' => 'required|file|image'
         ]);
 
         $data = $request->all();
 
         //image upload
-        if($image = $request->file('image')) {
+        if(request()->hasFile('image')) {
+            $image = $request->file('image');
             $name = time() . '.' . $image->getClientOriginalName();
             $image->move(public_path('images'), $name);
-            $data['image'] = "$name";
+            $data['image'] = $name;
         }
 
         $this->vehicle->createVehicle($data);
@@ -89,19 +74,7 @@ class VehicleController extends Controller
     public function show($id)
     {
         $vehicle = $this->vehicle->getVehicleById($id);
-
         return response()->json($vehicle);
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Vehicle  $vehicle
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Vehicle $vehicle)
-    {
-        //
     }
 
     /**
@@ -111,12 +84,34 @@ class VehicleController extends Controller
      * @param  \App\Models\Vehicle  $vehicle
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Vehicle $vehicle)
+    public function update(Request $request)
     {
-        $vehicle->fill($request->post())->save();
+        $request->validate([
+            'name' => 'required',
+            'make' => 'required',
+            'model' => 'required',
+            'year' => 'required',
+            'gearbox' => 'required',
+            'fuel_type' => 'required',
+            'price' => 'required',
+            'image' => 'required'
+        ]);
+
+        $data = $request->all();
+
+        //image upload
+        if(request()->hasFile('image')) {
+            $image = $request->file('image');
+            $name = time() . '.' . $image->getClientOriginalName();
+            $image->move(public_path('images'), $name);
+            $data['image'] = $name;
+        }
+
+        $this->vehicle->updateVehicle($data['id'], $data);
+
         return response()->json([
-            'message' => 'Vehicle pdated successfully!!!',
-            'vehicle' => $vehicle
+            'message' => 'Vehicle updated successfully!!!',
+            'vehicle' => $this->vehicle
         ]);
     }
 

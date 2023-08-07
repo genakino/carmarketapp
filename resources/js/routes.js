@@ -1,7 +1,7 @@
 const Welcome = () => import('./components/Welcome.vue')
 const VehicleList = () => import('./components/vehicle/list.vue')
 const VehicleCreate = () => import('./components/vehicle/add.vue')
-const VehicleEdit = () => import('./components/vehicle/edit.vue')
+const VehicleUpdate = () => import('./components/vehicle/update.vue')
 const VehicleShow = () => import('./components/vehicle/show.vue')
 
 export const routes = [
@@ -12,13 +12,13 @@ export const routes = [
     },
     {
         name: 'vehicleList',
-        path: '/vehicle',
+        path: '/vehicles',
         component: VehicleList
     },
     {
-        name: 'vehicleEdit',
-        path: '/vehicle/:id/edit',
-        component: VehicleEdit
+        name: 'vehicleUpdate',
+        path: '/vehicle/:id/update',
+        component: VehicleUpdate
     },
     {
         name: 'vehicleAdd',

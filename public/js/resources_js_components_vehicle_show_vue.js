@@ -92,6 +92,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   data: function data() {
     return {
       vehicle: {
+        id: "",
         name: "",
         make: "",
         model: "",
@@ -112,7 +113,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     },
     goUpdate: function goUpdate() {
       this.$router.push({
-        name: "vehicleEdit"
+        name: "vehicleUpdate"
       });
     },
     showVehicle: function showVehicle() {
@@ -124,6 +125,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               _context.next = 2;
               return _this.axios.get('/api/vehicle/' + _this.$route.params.id).then(function (response) {
                 var _response$data = response.data,
+                  id = _response$data.id,
                   name = _response$data.name,
                   make = _response$data.make,
                   model = _response$data.model,
@@ -132,6 +134,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   fuel_type = _response$data.fuel_type,
                   image = _response$data.image,
                   price = _response$data.price;
+                _this.vehicle.id = id;
                 _this.vehicle.name = name;
                 _this.vehicle.make = make;
                 _this.vehicle.model = model;
@@ -149,6 +152,18 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           }
         }, _callee);
       }))();
+    },
+    deleteVehicle: function deleteVehicle(id) {
+      var _this2 = this;
+      if (confirm("Are you sure to delete this vehicle ?")) {
+        this.axios["delete"]('/api/vehicle/' + id).then(function (response) {
+          _this2.$router.push({
+            name: "vehicleList"
+          });
+        })["catch"](function (error) {
+          console.log(error);
+        });
+      }
     }
   }
 });
@@ -263,25 +278,11 @@ var render = function () {
           ),
           _vm._v(" "),
           _c("div", { staticClass: "col-sm-8" }, [
-            _c("input", {
-              directives: [
-                {
-                  name: "model",
-                  rawName: "v-model",
-                  value: _vm.vehicle.image,
-                  expression: "vehicle.image",
-                },
-              ],
-              staticClass: "form-control",
-              attrs: { type: "text" },
-              domProps: { value: _vm.vehicle.image },
-              on: {
-                input: function ($event) {
-                  if ($event.target.composing) {
-                    return
-                  }
-                  _vm.$set(_vm.vehicle, "image", $event.target.value)
-                },
+            _c("img", {
+              attrs: {
+                src: "/images/" + _vm.vehicle.image,
+                height: "450px",
+                alt: "...",
               },
             }),
           ]),
@@ -537,6 +538,20 @@ var render = function () {
                 on: { click: _vm.goUpdate },
               },
               [_vm._v("Update Vehicle")]
+            ),
+            _vm._v(" "),
+            _c(
+              "button",
+              {
+                staticClass: "btn btn-danger",
+                attrs: { type: "button" },
+                on: {
+                  click: function ($event) {
+                    return _vm.deleteVehicle(_vm.vehicle.id)
+                  },
+                },
+              },
+              [_vm._v("Delete")]
             ),
           ]),
         ]),
