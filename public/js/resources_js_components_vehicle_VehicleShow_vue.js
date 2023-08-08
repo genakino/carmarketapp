@@ -1,10 +1,10 @@
 "use strict";
-(self["webpackChunkcarmarketapp"] = self["webpackChunkcarmarketapp"] || []).push([["resources_js_components_vehicle_update_vue"],{
+(self["webpackChunkcarmarketapp"] = self["webpackChunkcarmarketapp"] || []).push([["resources_js_components_vehicle_VehicleShow_vue"],{
 
-/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/vehicle/update.vue?vue&type=script&lang=js&":
-/*!*********************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/vehicle/update.vue?vue&type=script&lang=js& ***!
-  \*********************************************************************************************************************************************************************************************************************/
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/vehicle/VehicleShow.vue?vue&type=script&lang=js&":
+/*!**************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/vehicle/VehicleShow.vue?vue&type=script&lang=js& ***!
+  \**************************************************************************************************************************************************************************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 __webpack_require__.r(__webpack_exports__);
@@ -86,31 +86,13 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  name: "update-vehicle",
+  name: "show-vehicle",
   data: function data() {
     return {
       vehicle: {
+        id: "",
         name: "",
         make: "",
         model: "",
@@ -118,35 +100,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         gearbox: "",
         fuel_type: "",
         image: "",
-        price: "",
-        newImage: ""
-      },
-      startYear: 2000,
-      endYear: new Date().getFullYear(),
-      gearbox_options: [{
-        text: 'Automatic',
-        value: 'Automatic'
-      }, {
-        text: 'Manual',
-        value: 'Manual'
-      }],
-      fuel_type_options: [{
-        text: 'Petrol',
-        value: 'Petrol'
-      }, {
-        text: 'Diesel',
-        value: 'Diesel'
-      }]
-    };
-  },
-  computed: {
-    yearList: function yearList() {
-      var years = [];
-      for (var i = this.endYear; i >= this.startYear; i--) {
-        years.push(i);
+        price: ""
       }
-      return years;
-    }
+    };
   },
   mounted: function mounted() {
     this.showVehicle();
@@ -155,9 +111,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     goBack: function goBack() {
       this.$router.go(-1);
     },
-    onChange: function onChange(e) {
-      var image = e.target.files[0];
-      this.vehicle.newImage = image;
+    goUpdate: function goUpdate() {
+      this.$router.push({
+        name: "vehicleUpdate"
+      });
     },
     showVehicle: function showVehicle() {
       var _this = this;
@@ -168,6 +125,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               _context.next = 2;
               return _this.axios.get('/api/vehicle/' + _this.$route.params.id).then(function (response) {
                 var _response$data = response.data,
+                  id = _response$data.id,
                   name = _response$data.name,
                   make = _response$data.make,
                   model = _response$data.model,
@@ -176,6 +134,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   fuel_type = _response$data.fuel_type,
                   image = _response$data.image,
                   price = _response$data.price;
+                _this.vehicle.id = id;
                 _this.vehicle.name = name;
                 _this.vehicle.make = make;
                 _this.vehicle.model = model;
@@ -194,57 +153,36 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         }, _callee);
       }))();
     },
-    update: function update() {
+    deleteVehicle: function deleteVehicle(id) {
       var _this2 = this;
-      return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee2() {
-        var updateData;
-        return _regeneratorRuntime().wrap(function _callee2$(_context2) {
-          while (1) switch (_context2.prev = _context2.next) {
-            case 0:
-              updateData = new FormData();
-              updateData.append('id', _this2.$route.params.id);
-              updateData.append('name', _this2.vehicle.name);
-              updateData.append('make', _this2.vehicle.make);
-              updateData.append('model', _this2.vehicle.model);
-              updateData.append('year', _this2.vehicle.year);
-              updateData.append('gearbox', _this2.vehicle.gearbox);
-              updateData.append('fuel_type', _this2.vehicle.fuel_type);
-              updateData.append('image', _this2.vehicle.newImage ? _this2.vehicle.newImage : _this2.vehicle.image);
-              updateData.append('price', _this2.vehicle.price);
-              updateData.append('_method', 'PATCH');
-              _context2.next = 13;
-              return _this2.axios.post('/api/vehicle/' + _this2.$route.params.id, updateData).then(function (response) {
-                alert(response.data.message);
-                _this2.$router.push({
-                  name: "vehicleList"
-                });
-              })["catch"](function (error) {
-                console.log(error);
-              });
-            case 13:
-            case "end":
-              return _context2.stop();
-          }
-        }, _callee2);
-      }))();
+      if (confirm("Are you sure to delete this vehicle ?")) {
+        this.axios["delete"]('/api/vehicle/' + id).then(function (response) {
+          alert(response.data.message);
+          _this2.$router.push({
+            name: "vehicleList"
+          });
+        })["catch"](function (error) {
+          console.log(error);
+        });
+      }
     }
   }
 });
 
 /***/ }),
 
-/***/ "./resources/js/components/vehicle/update.vue":
-/*!****************************************************!*\
-  !*** ./resources/js/components/vehicle/update.vue ***!
-  \****************************************************/
+/***/ "./resources/js/components/vehicle/VehicleShow.vue":
+/*!*********************************************************!*\
+  !*** ./resources/js/components/vehicle/VehicleShow.vue ***!
+  \*********************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _update_vue_vue_type_template_id_2a48abd2___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./update.vue?vue&type=template&id=2a48abd2& */ "./resources/js/components/vehicle/update.vue?vue&type=template&id=2a48abd2&");
-/* harmony import */ var _update_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./update.vue?vue&type=script&lang=js& */ "./resources/js/components/vehicle/update.vue?vue&type=script&lang=js&");
+/* harmony import */ var _VehicleShow_vue_vue_type_template_id_205dcccb___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./VehicleShow.vue?vue&type=template&id=205dcccb& */ "./resources/js/components/vehicle/VehicleShow.vue?vue&type=template&id=205dcccb&");
+/* harmony import */ var _VehicleShow_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./VehicleShow.vue?vue&type=script&lang=js& */ "./resources/js/components/vehicle/VehicleShow.vue?vue&type=script&lang=js&");
 /* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! !../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
 
@@ -254,9 +192,9 @@ __webpack_require__.r(__webpack_exports__);
 /* normalize component */
 ;
 var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
-  _update_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
-  _update_vue_vue_type_template_id_2a48abd2___WEBPACK_IMPORTED_MODULE_0__.render,
-  _update_vue_vue_type_template_id_2a48abd2___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
+  _VehicleShow_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _VehicleShow_vue_vue_type_template_id_205dcccb___WEBPACK_IMPORTED_MODULE_0__.render,
+  _VehicleShow_vue_vue_type_template_id_205dcccb___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
   false,
   null,
   null,
@@ -266,46 +204,46 @@ var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__
 
 /* hot reload */
 if (false) { var api; }
-component.options.__file = "resources/js/components/vehicle/update.vue"
+component.options.__file = "resources/js/components/vehicle/VehicleShow.vue"
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (component.exports);
 
 /***/ }),
 
-/***/ "./resources/js/components/vehicle/update.vue?vue&type=script&lang=js&":
-/*!*****************************************************************************!*\
-  !*** ./resources/js/components/vehicle/update.vue?vue&type=script&lang=js& ***!
-  \*****************************************************************************/
+/***/ "./resources/js/components/vehicle/VehicleShow.vue?vue&type=script&lang=js&":
+/*!**********************************************************************************!*\
+  !*** ./resources/js/components/vehicle/VehicleShow.vue?vue&type=script&lang=js& ***!
+  \**********************************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_update_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./update.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/vehicle/update.vue?vue&type=script&lang=js&");
- /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_update_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_VehicleShow_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./VehicleShow.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/vehicle/VehicleShow.vue?vue&type=script&lang=js&");
+ /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_VehicleShow_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
 
 /***/ }),
 
-/***/ "./resources/js/components/vehicle/update.vue?vue&type=template&id=2a48abd2&":
-/*!***********************************************************************************!*\
-  !*** ./resources/js/components/vehicle/update.vue?vue&type=template&id=2a48abd2& ***!
-  \***********************************************************************************/
+/***/ "./resources/js/components/vehicle/VehicleShow.vue?vue&type=template&id=205dcccb&":
+/*!****************************************************************************************!*\
+  !*** ./resources/js/components/vehicle/VehicleShow.vue?vue&type=template&id=205dcccb& ***!
+  \****************************************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   render: () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_update_vue_vue_type_template_id_2a48abd2___WEBPACK_IMPORTED_MODULE_0__.render),
-/* harmony export */   staticRenderFns: () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_update_vue_vue_type_template_id_2a48abd2___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
+/* harmony export */   render: () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_VehicleShow_vue_vue_type_template_id_205dcccb___WEBPACK_IMPORTED_MODULE_0__.render),
+/* harmony export */   staticRenderFns: () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_VehicleShow_vue_vue_type_template_id_205dcccb___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
 /* harmony export */ });
-/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_update_vue_vue_type_template_id_2a48abd2___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./update.vue?vue&type=template&id=2a48abd2& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/vehicle/update.vue?vue&type=template&id=2a48abd2&");
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_VehicleShow_vue_vue_type_template_id_205dcccb___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./VehicleShow.vue?vue&type=template&id=205dcccb& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/vehicle/VehicleShow.vue?vue&type=template&id=205dcccb&");
 
 
 /***/ }),
 
-/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/vehicle/update.vue?vue&type=template&id=2a48abd2&":
-/*!**************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/vehicle/update.vue?vue&type=template&id=2a48abd2& ***!
-  \**************************************************************************************************************************************************************************************************************************/
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/vehicle/VehicleShow.vue?vue&type=template&id=205dcccb&":
+/*!*******************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/vehicle/VehicleShow.vue?vue&type=template&id=205dcccb& ***!
+  \*******************************************************************************************************************************************************************************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 __webpack_require__.r(__webpack_exports__);
@@ -318,14 +256,13 @@ var render = function () {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "container mt-5 mb-5" }, [
-    _c("h2", [_vm._v("Update Vehicle")]),
+    _c("h2", [_vm._v("Vehicle Details")]),
     _vm._v(" "),
     _c("hr"),
     _vm._v(" "),
     _c(
       "form",
       {
-        attrs: { enctype: "multipart/form-data" },
         on: {
           submit: function ($event) {
             $event.preventDefault()
@@ -335,10 +272,11 @@ var render = function () {
       },
       [
         _c("div", { staticClass: "form-group row mb-3" }, [
-          _c("label", {
-            staticClass: "col-sm-2 col-form-label",
-            attrs: { for: "image" },
-          }),
+          _c(
+            "label",
+            { staticClass: "col-sm-2 col-form-label", attrs: { for: "image" } },
+            [_vm._v("Image")]
+          ),
           _vm._v(" "),
           _c("div", { staticClass: "col-sm-8" }, [
             _c("img", {
@@ -347,22 +285,6 @@ var render = function () {
                 height: "450px",
                 alt: "...",
               },
-            }),
-          ]),
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "form-group row mb-3" }, [
-          _c(
-            "label",
-            { staticClass: "col-sm-2 col-form-label", attrs: { for: "image" } },
-            [_vm._v("Image")]
-          ),
-          _vm._v(" "),
-          _c("div", { staticClass: "col-sm-8" }, [
-            _c("input", {
-              staticClass: "form-control",
-              attrs: { type: "file", name: "image" },
-              on: { change: _vm.onChange },
             }),
           ]),
         ]),
@@ -385,7 +307,7 @@ var render = function () {
                 },
               ],
               staticClass: "form-control",
-              attrs: { type: "text" },
+              attrs: { type: "text", readonly: "" },
               domProps: { value: _vm.vehicle.name },
               on: {
                 input: function ($event) {
@@ -417,7 +339,7 @@ var render = function () {
                 },
               ],
               staticClass: "form-control",
-              attrs: { type: "text" },
+              attrs: { type: "text", readonly: "" },
               domProps: { value: _vm.vehicle.make },
               on: {
                 input: function ($event) {
@@ -449,7 +371,7 @@ var render = function () {
                 },
               ],
               staticClass: "form-control",
-              attrs: { type: "text" },
+              attrs: { type: "text", readonly: "" },
               domProps: { value: _vm.vehicle.model },
               on: {
                 input: function ($event) {
@@ -471,58 +393,27 @@ var render = function () {
           ),
           _vm._v(" "),
           _c("div", { staticClass: "col-sm-8" }, [
-            _c(
-              "select",
-              {
-                directives: [
-                  {
-                    name: "model",
-                    rawName: "v-model",
-                    value: _vm.vehicle.year,
-                    expression: "vehicle.year",
-                  },
-                ],
-                staticClass: "form-control",
-                attrs: { name: "year" },
-                on: {
-                  change: function ($event) {
-                    var $$selectedVal = Array.prototype.filter
-                      .call($event.target.options, function (o) {
-                        return o.selected
-                      })
-                      .map(function (o) {
-                        var val = "_value" in o ? o._value : o.value
-                        return val
-                      })
-                    _vm.$set(
-                      _vm.vehicle,
-                      "year",
-                      $event.target.multiple ? $$selectedVal : $$selectedVal[0]
-                    )
-                  },
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.vehicle.year,
+                  expression: "vehicle.year",
+                },
+              ],
+              staticClass: "form-control",
+              attrs: { type: "text", readonly: "" },
+              domProps: { value: _vm.vehicle.year },
+              on: {
+                input: function ($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.$set(_vm.vehicle, "year", $event.target.value)
                 },
               },
-              [
-                _c("option", { attrs: { value: "", disabled: "" } }, [
-                  _vm._v("Choose Year"),
-                ]),
-                _vm._v(" "),
-                _vm._l(_vm.yearList, function (year) {
-                  return _c(
-                    "option",
-                    { key: year, domProps: { value: year } },
-                    [
-                      _vm._v(
-                        "\n                        " +
-                          _vm._s(year) +
-                          "\n                    "
-                      ),
-                    ]
-                  )
-                }),
-              ],
-              2
-            ),
+            }),
           ]),
         ]),
         _vm._v(" "),
@@ -537,52 +428,27 @@ var render = function () {
           ),
           _vm._v(" "),
           _c("div", { staticClass: "col-sm-8" }, [
-            _c(
-              "select",
-              {
-                directives: [
-                  {
-                    name: "model",
-                    rawName: "v-model",
-                    value: _vm.vehicle.gearbox,
-                    expression: "vehicle.gearbox",
-                  },
-                ],
-                staticClass: "form-control",
-                attrs: { name: "gearbox" },
-                on: {
-                  change: function ($event) {
-                    var $$selectedVal = Array.prototype.filter
-                      .call($event.target.options, function (o) {
-                        return o.selected
-                      })
-                      .map(function (o) {
-                        var val = "_value" in o ? o._value : o.value
-                        return val
-                      })
-                    _vm.$set(
-                      _vm.vehicle,
-                      "gearbox",
-                      $event.target.multiple ? $$selectedVal : $$selectedVal[0]
-                    )
-                  },
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.vehicle.gearbox,
+                  expression: "vehicle.gearbox",
+                },
+              ],
+              staticClass: "form-control",
+              attrs: { type: "text", readonly: "" },
+              domProps: { value: _vm.vehicle.gearbox },
+              on: {
+                input: function ($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.$set(_vm.vehicle, "gearbox", $event.target.value)
                 },
               },
-              _vm._l(_vm.gearbox_options, function (gearbox) {
-                return _c(
-                  "option",
-                  { key: gearbox.value, domProps: { value: gearbox.value } },
-                  [
-                    _vm._v(
-                      "\n                        " +
-                        _vm._s(gearbox.text) +
-                        "\n                    "
-                    ),
-                  ]
-                )
-              }),
-              0
-            ),
+            }),
           ]),
         ]),
         _vm._v(" "),
@@ -597,55 +463,27 @@ var render = function () {
           ),
           _vm._v(" "),
           _c("div", { staticClass: "col-sm-8" }, [
-            _c(
-              "select",
-              {
-                directives: [
-                  {
-                    name: "model",
-                    rawName: "v-model",
-                    value: _vm.vehicle.fuel_type,
-                    expression: "vehicle.fuel_type",
-                  },
-                ],
-                staticClass: "form-control",
-                attrs: { name: "fuel_type" },
-                on: {
-                  change: function ($event) {
-                    var $$selectedVal = Array.prototype.filter
-                      .call($event.target.options, function (o) {
-                        return o.selected
-                      })
-                      .map(function (o) {
-                        var val = "_value" in o ? o._value : o.value
-                        return val
-                      })
-                    _vm.$set(
-                      _vm.vehicle,
-                      "fuel_type",
-                      $event.target.multiple ? $$selectedVal : $$selectedVal[0]
-                    )
-                  },
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.vehicle.fuel_type,
+                  expression: "vehicle.fuel_type",
+                },
+              ],
+              staticClass: "form-control",
+              attrs: { type: "text", readonly: "" },
+              domProps: { value: _vm.vehicle.fuel_type },
+              on: {
+                input: function ($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.$set(_vm.vehicle, "fuel_type", $event.target.value)
                 },
               },
-              _vm._l(_vm.fuel_type_options, function (fuel_type) {
-                return _c(
-                  "option",
-                  {
-                    key: fuel_type.value,
-                    domProps: { value: fuel_type.value },
-                  },
-                  [
-                    _vm._v(
-                      "\n                        " +
-                        _vm._s(fuel_type.text) +
-                        "\n                    "
-                    ),
-                  ]
-                )
-              }),
-              0
-            ),
+            }),
           ]),
         ]),
         _vm._v(" "),
@@ -667,7 +505,7 @@ var render = function () {
                 },
               ],
               staticClass: "form-control",
-              attrs: { type: "text" },
+              attrs: { type: "text", readonly: "" },
               domProps: { value: _vm.vehicle.price },
               on: {
                 input: function ($event) {
@@ -681,45 +519,43 @@ var render = function () {
           ]),
         ]),
         _vm._v(" "),
-        _c(
-          "div",
-          { staticClass: "form-group row mb-3" },
-          [
+        _c("div", { staticClass: "form-group row mb-3" }, [
+          _c("div", { staticClass: "col-sm-8" }, [
             _c(
-              "b-alert",
+              "button",
               {
-                attrs: { show: "", variant: "success", dismissible: "" },
-                model: {
-                  value: _vm.show,
-                  callback: function ($$v) {
-                    _vm.show = $$v
-                  },
-                  expression: "show",
-                },
+                staticClass: "btn btn-secondary",
+                attrs: { type: "button" },
+                on: { click: _vm.goBack },
               },
-              [_vm._v("Vehicle updated successfully")]
+              [_vm._v("Back")]
             ),
             _vm._v(" "),
-            _c("div", { staticClass: "col-sm-8" }, [
-              _c(
-                "button",
-                {
-                  staticClass: "btn btn-secondary",
-                  attrs: { type: "button" },
-                  on: { click: _vm.goBack },
+            _c(
+              "button",
+              {
+                staticClass: "btn btn-primary",
+                attrs: { type: "submit" },
+                on: { click: _vm.goUpdate },
+              },
+              [_vm._v("Update Vehicle")]
+            ),
+            _vm._v(" "),
+            _c(
+              "button",
+              {
+                staticClass: "btn btn-danger",
+                attrs: { type: "button" },
+                on: {
+                  click: function ($event) {
+                    return _vm.deleteVehicle(_vm.vehicle.id)
+                  },
                 },
-                [_vm._v("Cancel")]
-              ),
-              _vm._v(" "),
-              _c(
-                "button",
-                { staticClass: "btn btn-primary", attrs: { type: "submit" } },
-                [_vm._v("Update Vehicle")]
-              ),
-            ]),
-          ],
-          1
-        ),
+              },
+              [_vm._v("Delete")]
+            ),
+          ]),
+        ]),
       ]
     ),
   ])

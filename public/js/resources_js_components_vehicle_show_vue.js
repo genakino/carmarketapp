@@ -157,6 +157,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       var _this2 = this;
       if (confirm("Are you sure to delete this vehicle ?")) {
         this.axios["delete"]('/api/vehicle/' + id).then(function (response) {
+          alert(response.data.message);
           _this2.$router.push({
             name: "vehicleList"
           });

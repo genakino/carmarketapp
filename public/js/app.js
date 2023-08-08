@@ -124,25 +124,25 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   routes: () => (/* binding */ routes)
 /* harmony export */ });
-var Welcome = function Welcome() {
-  return __webpack_require__.e(/*! import() */ "resources_js_components_Welcome_vue").then(__webpack_require__.bind(__webpack_require__, /*! ./components/Welcome.vue */ "./resources/js/components/Welcome.vue"));
+var Home = function Home() {
+  return __webpack_require__.e(/*! import() */ "resources_js_components_Home_vue").then(__webpack_require__.bind(__webpack_require__, /*! ./components/Home.vue */ "./resources/js/components/Home.vue"));
 };
 var VehicleList = function VehicleList() {
-  return __webpack_require__.e(/*! import() */ "resources_js_components_vehicle_list_vue").then(__webpack_require__.bind(__webpack_require__, /*! ./components/vehicle/list.vue */ "./resources/js/components/vehicle/list.vue"));
+  return __webpack_require__.e(/*! import() */ "resources_js_components_vehicle_VehicleList_vue").then(__webpack_require__.bind(__webpack_require__, /*! ./components/vehicle/VehicleList.vue */ "./resources/js/components/vehicle/VehicleList.vue"));
 };
 var VehicleCreate = function VehicleCreate() {
-  return __webpack_require__.e(/*! import() */ "resources_js_components_vehicle_add_vue").then(__webpack_require__.bind(__webpack_require__, /*! ./components/vehicle/add.vue */ "./resources/js/components/vehicle/add.vue"));
+  return __webpack_require__.e(/*! import() */ "resources_js_components_vehicle_VehicleAdd_vue").then(__webpack_require__.bind(__webpack_require__, /*! ./components/vehicle/VehicleAdd.vue */ "./resources/js/components/vehicle/VehicleAdd.vue"));
 };
 var VehicleUpdate = function VehicleUpdate() {
-  return __webpack_require__.e(/*! import() */ "resources_js_components_vehicle_update_vue").then(__webpack_require__.bind(__webpack_require__, /*! ./components/vehicle/update.vue */ "./resources/js/components/vehicle/update.vue"));
+  return __webpack_require__.e(/*! import() */ "resources_js_components_vehicle_VehicleUpdate_vue").then(__webpack_require__.bind(__webpack_require__, /*! ./components/vehicle/VehicleUpdate.vue */ "./resources/js/components/vehicle/VehicleUpdate.vue"));
 };
 var VehicleShow = function VehicleShow() {
-  return __webpack_require__.e(/*! import() */ "resources_js_components_vehicle_show_vue").then(__webpack_require__.bind(__webpack_require__, /*! ./components/vehicle/show.vue */ "./resources/js/components/vehicle/show.vue"));
+  return __webpack_require__.e(/*! import() */ "resources_js_components_vehicle_VehicleShow_vue").then(__webpack_require__.bind(__webpack_require__, /*! ./components/vehicle/VehicleShow.vue */ "./resources/js/components/vehicle/VehicleShow.vue"));
 };
 var routes = [{
   name: 'home',
   path: '/',
-  component: Welcome
+  component: Home
 }, {
   name: 'vehicleList',
   path: '/vehicles',
@@ -42252,7 +42252,7 @@ const isThenable = (thing) =>
 /******/ 		// This function allow to reference async chunks
 /******/ 		__webpack_require__.u = (chunkId) => {
 /******/ 			// return url for filenames not based on template
-/******/ 			if ({"resources_js_components_Welcome_vue":1,"resources_js_components_vehicle_list_vue":1,"resources_js_components_vehicle_add_vue":1,"resources_js_components_vehicle_update_vue":1,"resources_js_components_vehicle_show_vue":1}[chunkId]) return "js/" + chunkId + ".js";
+/******/ 			if ({"resources_js_components_Home_vue":1,"resources_js_components_vehicle_VehicleList_vue":1,"resources_js_components_vehicle_VehicleAdd_vue":1,"resources_js_components_vehicle_VehicleUpdate_vue":1,"resources_js_components_vehicle_VehicleShow_vue":1}[chunkId]) return "js/" + chunkId + ".js";
 /******/ 			// return url for filenames based on template
 /******/ 			return undefined;
 /******/ 		};

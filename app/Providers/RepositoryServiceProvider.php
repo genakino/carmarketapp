@@ -2,9 +2,11 @@
 
 namespace App\Providers;
 
+use App\Repository\VehicleRepository;
+use App\Repository\VehicleRepositoryInterface;
 use Illuminate\Support\ServiceProvider;
 
-class AppServiceProvider extends ServiceProvider
+class RepositoryServiceProvider extends ServiceProvider
 {
     /**
      * Register any application services.
@@ -13,7 +15,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-       //
+        $this->app->bind(VehicleRepositoryInterface::class, VehicleRepository::class);
     }
 
     /**

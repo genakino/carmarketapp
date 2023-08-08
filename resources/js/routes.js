@@ -1,14 +1,14 @@
-const Welcome = () => import('./components/Welcome.vue')
-const VehicleList = () => import('./components/vehicle/list.vue')
-const VehicleCreate = () => import('./components/vehicle/add.vue')
-const VehicleUpdate = () => import('./components/vehicle/update.vue')
-const VehicleShow = () => import('./components/vehicle/show.vue')
+const Home = () => import('./components/Home.vue')
+const VehicleList = () => import('./components/vehicle/VehicleList.vue')
+const VehicleCreate = () => import('./components/vehicle/VehicleAdd.vue')
+const VehicleUpdate = () => import('./components/vehicle/VehicleUpdate.vue')
+const VehicleShow = () => import('./components/vehicle/VehicleShow.vue')
 
 export const routes = [
     {
         name: 'home',
         path: '/',
-        component: Welcome
+        component: Home
     },
     {
         name: 'vehicleList',

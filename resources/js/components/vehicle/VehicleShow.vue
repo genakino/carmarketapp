@@ -128,6 +128,7 @@ export default{
         deleteVehicle(id){
             if(confirm("Are you sure to delete this vehicle ?")){
                 this.axios.delete('/api/vehicle/'+id).then(response=>{
+                    alert(response.data.message);
                     this.$router.push({name:"vehicleList"})
                 }).catch(error=>{
                     console.log(error)

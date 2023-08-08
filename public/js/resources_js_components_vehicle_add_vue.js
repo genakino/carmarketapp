@@ -101,6 +101,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "add-vehicle",
@@ -166,9 +167,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               data.append('price', _this.vehicle.price);
               _context.next = 11;
               return _this.axios.post('/api/vehicle', data).then(function (response) {
-                console.log(response.data);
-                _this.message = response.data.message;
-                alert(_this.message);
+                alert(response.data.message);
                 _this.$router.push({
                   name: "vehicleList"
                 });
@@ -630,7 +629,29 @@ var render = function () {
           ]),
         ]),
         _vm._v(" "),
-        _vm._m(0),
+        _c(
+          "div",
+          { staticClass: "form-group row mb-3" },
+          [
+            _c(
+              "b-alert",
+              {
+                attrs: { show: "", variant: "success", dismissible: "" },
+                model: {
+                  value: _vm.show,
+                  callback: function ($$v) {
+                    _vm.show = $$v
+                  },
+                  expression: "show",
+                },
+              },
+              [_vm._v("Vehicle added successfully")]
+            ),
+            _vm._v(" "),
+            _vm._m(0),
+          ],
+          1
+        ),
       ]
     ),
   ])
@@ -640,14 +661,12 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "form-group row mb-3" }, [
-      _c("div", { staticClass: "col-sm-8" }, [
-        _c(
-          "button",
-          { staticClass: "btn btn-primary", attrs: { type: "submit" } },
-          [_vm._v("Add Vehicle")]
-        ),
-      ]),
+    return _c("div", { staticClass: "col-sm-8" }, [
+      _c(
+        "button",
+        { staticClass: "btn btn-primary", attrs: { type: "submit" } },
+        [_vm._v("Add Vehicle")]
+      ),
     ])
   },
 ]

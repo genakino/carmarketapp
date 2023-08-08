@@ -23,8 +23,8 @@ return new class extends Migration
             $table->string('fuel_type');
             $table->string('image');
             $table->float('price');
-            $table->boolean('delete_flg')->default(0);
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

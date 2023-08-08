@@ -9,11 +9,11 @@ use Illuminate\Http\Request;
 class VehicleController extends Controller
 {
 
-    public $vehicle;
+    private $vehicleRepository;
 
-    public function __construct(VehicleRepositoryInterface $vehicle)
+    public function __construct(VehicleRepositoryInterface $vehicleRepository)
     {
-        $this->vehicle = $vehicle;
+        $this->vehicleRepository = $vehicleRepository;
     }
 
     /**
@@ -23,7 +23,7 @@ class VehicleController extends Controller
      */
     public function index()
     {
-        $vehicles = $this->vehicle->getAllVehicles();
+        $vehicles = $this->vehicleRepository->getAllVehicles();
         return response()->json($vehicles);
     }
 
@@ -36,13 +36,13 @@ class VehicleController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name' => 'required',
-            'make' => 'required',
-            'model' => 'required',
-            'year' => 'required',
-            'gearbox' => 'required',
-            'fuel_type' => 'required',
-            'price' => 'required',
+            'name' => 'required|string',
+            'make' => 'required|string',
+            'model' => 'required|string',
+            'year' => 'required|integer',
+            'gearbox' => 'required|string',
+            'fuel_type' => 'required|string',
+            'price' => 'required|integer',
             'image' => 'required|file|image'
         ]);
 
@@ -56,11 +56,11 @@ class VehicleController extends Controller
             $data['image'] = $name;
         }
 
-        $this->vehicle->createVehicle($data);
+        $vehicle = $this->vehicleRepository->createVehicle($data);
 
         return response()->json([
-            'message' => 'Vehicle added successfully!!!',
-            'vehicle' => $this->vehicle
+            'message' => 'Vehicle added successfully.',
+            'vehicle' => $vehicle
         ]);
 
     }
@@ -73,7 +73,7 @@ class VehicleController extends Controller
      */
     public function show($id)
     {
-        $vehicle = $this->vehicle->getVehicleById($id);
+        $vehicle = $this->vehicleRepository->getVehicleById($id);
         return response()->json($vehicle);
     }
 
@@ -87,13 +87,13 @@ class VehicleController extends Controller
     public function update(Request $request)
     {
         $request->validate([
-            'name' => 'required',
-            'make' => 'required',
-            'model' => 'required',
-            'year' => 'required',
-            'gearbox' => 'required',
-            'fuel_type' => 'required',
-            'price' => 'required',
+            'name' => 'required|string',
+            'make' => 'required|string',
+            'model' => 'required|string',
+            'year' => 'required|integer',
+            'gearbox' => 'required|string',
+            'fuel_type' => 'required|string',
+            'price' => 'required|integer',
             'image' => 'required'
         ]);
 
@@ -107,11 +107,11 @@ class VehicleController extends Controller
             $data['image'] = $name;
         }
 
-        $this->vehicle->updateVehicle($data['id'], $data);
+        $vehicle = $this->vehicleRepository->updateVehicle($data['id'], $data);
 
         return response()->json([
-            'message' => 'Vehicle updated successfully!!!',
-            'vehicle' => $this->vehicle
+            'message' => 'Vehicle updated successfully.',
+            'vehicle' => $vehicle
         ]);
     }
 
@@ -125,7 +125,7 @@ class VehicleController extends Controller
     {
         $vehicle->delete();
         return response()->json([
-            'message' => 'Vehicle deleted successfully!!!'
+            'message' => 'Vehicle deleted successfully.'
         ]);
     }
 }
